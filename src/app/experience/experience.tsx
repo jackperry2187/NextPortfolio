@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, CardBody, CardTitle } from "~/components/Card"
 import { Calendar } from "~/components/icons";
+import { WebLink } from "~/components/Link";
 
 // TODO: Add some way to easily search/filter by skills or technologies
 
@@ -11,7 +12,7 @@ export const ThinkAlpha = () => {
                 <Date>March 2022 - May 2024</Date>
                 <JobTitle>Full-Stack Engineer</JobTitle>
                 <Company>
-                    <Link href="#TODO" className="underline">ThinkALPHA Technologies</Link>
+                    <WebLink href="https://thinkalpha.io/">ThinkALPHA Technologies</WebLink>
                 </Company>
                 <Location>Remote</Location>
             </CardTitle>
@@ -33,7 +34,7 @@ export const StevensCA = () => {
             <CardTitle>
                 <Date>August 2021 - May 2022</Date>
                 <JobTitle>Course Assistant</JobTitle>
-                <Company>Stevens Institute of Technology</Company>
+                <Company><WebLink href={"https://www.stevens.edu/"}>Stevens Institute of Technology</WebLink></Company>
                 <Location>Hoboken, NJ</Location>
             </CardTitle>
             <CardBody>
@@ -53,7 +54,7 @@ export const IDTech = () => {
             <CardTitle>
                 <Date>June 2021 - August 2021</Date>
                 <JobTitle>Zoom Instructor</JobTitle>
-                <Company>iD Tech</Company>
+                <Company><WebLink href={"https://www.idtech.com/"}>iD Tech</WebLink></Company>
                 <Location>Remote</Location>
             </CardTitle>
             <CardBody>
@@ -74,7 +75,7 @@ export const NovaGames = () => {
             <CardTitle>
                 <Date>September 2019 - May 2021</Date>
                 <JobTitle>Clerk</JobTitle>
-                <Company>Nova Games</Company>
+                <Company><WebLink href="https://www.facebook.com/NovaGamesBrick/">Nova Games</WebLink></Company>
                 <Location>Brick, NJ</Location>
             </CardTitle>
             <CardBody>
@@ -95,7 +96,7 @@ export const Jenks = () => {
             <CardTitle>
                 <Date>April 2019 - October 2019</Date>
                 <JobTitle>Ride Operator</JobTitle>
-                <Company>Jenkinson`&apos`s Ride Park</Company>
+                <Company><WebLink href="https://jenkinsons.com/amusement-park/">Jenkinson&#39;s Ride Park</WebLink></Company>
                 <Location>Point Pleasant Beach, NJ</Location>
             </CardTitle>
             <CardBody>
@@ -116,7 +117,7 @@ export const MonmouthResearcher = () => {
             <CardTitle>
                 <Date>July 2018 - August 2018</Date>
                 <JobTitle>Senior Research Associate</JobTitle>
-                <Company>Monmouth University</Company>
+                <Company><WebLink href="https://www.monmouth.edu/">Monmouth University</WebLink></Company>
                 <Location>Long Branch, NJ</Location>
             </CardTitle>
             <CardBody>
@@ -168,7 +169,7 @@ const Company = (
     }>
 ) => {
     return (
-        <div className="underline">
+        <div className="">
             {children}
         </div>
     );
