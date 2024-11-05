@@ -16,9 +16,9 @@ const RootLayout = ({
 }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen max-h-screen">
         <Header />
-        <main className="flex flex-grow min-h-max flex-col items-center justify-center bg-slate-800 text-white">
+        <main className="flex flex-grow flex-col items-center justify-center bg-slate-800 text-white">
           {children}
         </main>
         <Footer />
