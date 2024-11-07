@@ -7,8 +7,8 @@ import me from '../../public/images/profile_1.png';
 const HomePage = () => {
   const [firstName, setFirstName] = useState("_");
   const [lastName, setLastName] = useState("_");
-  let [timeRan, setTimeRan] = useState(0);
-  let [isActive, setIsActive] = useState(true);
+  const [timeRan, setTimeRan] = useState(0);
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     let interval: undefined | NodeJS.Timeout = undefined;
@@ -27,7 +27,6 @@ const HomePage = () => {
     if(timeRan <= 7) setFirstName('Jackson'.substring(0, timeRan) + (timeRan < 7 ? '_' : ''));
     if(timeRan <= 5) setLastName('Perry'.substring(0, timeRan) + (timeRan < 5 ? '_' : ''));
   }, [timeRan]);
-  // TODO: implement the cool typewriter kinda thing into this and also make it way better
 
   return (
     <div className="container flex flex-col items-center justify-center px-4 py-16">
