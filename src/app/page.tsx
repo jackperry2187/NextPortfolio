@@ -35,7 +35,7 @@ const HomePage = () => {
           <h1 className="text-7xl">
             {firstName} {lastName}
           </h1>
-          <h4 className="text-xl text-slate-400">Mid-Level Full Stack Web Engineer and Minecraft Mod Developer</h4>
+          <h4 className="text-xl text-slate-400">Mid-Level Full Stack Web Engineer, CFO, and Minecraft Mod Developer</h4>
         </div>
         <div className="flex flex-grow flex-col items-center p-2">
           <Image src={me} alt="profile_picture" className="max-w-100 w-3/4 h-auto p-1 bg-white border border-white"/>
