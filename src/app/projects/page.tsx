@@ -1,40 +1,30 @@
 'use client'
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardBody, CardTitle } from "~/components/Card";
 import { Curseforge, GitHub, Modrinth } from "~/components/icons";
-import { getCurseforgeInfo } from "./Curseforge";
-import { getModrinthInfo } from "./Modrinth";
 import { WebLink } from "~/components/Link";
+import { useModStore } from "../state/modState";
+import { useShallow } from "zustand/shallow";
+import { type CurseforgeInfo, type ModrinthInfo } from "../state/modTypes";
+import { Expander } from "~/components/Expander";
+import { Skill, SkillGroup, Skills } from "~/components/Skills";
 
 const Projects = () => {
-    const [GRCFDownloads, setGRCFDownloads] = useState<number | null>(null);
-    const [GRMRDownloads, setGRMRDownloads] = useState<number | null>(null);
-    const [GRMRFollowers, setGRMRFollowers] = useState<number | null>(null);
+    const [modrinthInfo, setModrinthInfo] = useState<ModrinthInfo | null>(null);
+    const [curseforgeInfo, setCurseforgeInfo] = useState<CurseforgeInfo | null>(null);
 
-    const [EpCFDownloads, setEpCFDownloads] = useState<number | null>(null);
-    const [EpMRDownloads, setEpMRDownloads] = useState<number | null>(null);
-    const [EpMRFollowers, setEpMRFollowers] = useState<number | null>(null);
-
-    const getCurseforge = useCallback(async () => {
-        const curseforgeInfo = await getCurseforgeInfo();
-        setGRCFDownloads(curseforgeInfo.GRDownloads);
-        setEpCFDownloads(curseforgeInfo.EpDownloads);
-    }, [setGRCFDownloads, setEpCFDownloads]);
-
-    const getModrinth = useCallback(async () => {
-        const modrinthInfo = await getModrinthInfo();
-        setGRMRDownloads(modrinthInfo.GRDownloads);
-        setGRMRFollowers(modrinthInfo.GRFollowers);
-        setEpMRDownloads(modrinthInfo.EpDownloads);
-        setEpMRFollowers(modrinthInfo.EpFollowers);
-    }, [setGRMRDownloads, setEpMRDownloads, setGRMRFollowers, setEpMRFollowers]);
+    const [getModrinthInfo, getCurseforgeInfo] = useModStore(useShallow((state) => [state.getModrinth, state.getCurseforge]));
 
     useEffect(() => {
-        void getCurseforge();
-        void getModrinth();
-    }, [getCurseforge, getModrinth]);
+        const getInfo = async() => {
+            setModrinthInfo(await getModrinthInfo());
+            setCurseforgeInfo(await getCurseforgeInfo());
+        }
+
+        if(!modrinthInfo || !curseforgeInfo) void getInfo();
+    }, [modrinthInfo, curseforgeInfo, getModrinthInfo, getCurseforgeInfo]);
 
     return (
         <div className="flex flex-col text-slate-200 py-1">
@@ -44,8 +34,8 @@ const Projects = () => {
                     <CardTitle>
                             <Title>Gentle Reminders</Title>
                             <div className="flex gap-4 justify-center pt-3">
-                                <LinkOuter><CurseforgeLink href={"https://www.curseforge.com/minecraft/mc-mods/gentlereminders"} />: {GRCFDownloads} Downloads</LinkOuter>
-                                <LinkOuter><ModrinthLink href={"https://modrinth.com/mod/gentlereminders"} />: {GRMRDownloads} Downloads, {GRMRFollowers} followers</LinkOuter>
+                                <LinkOuter><CurseforgeLink href={"https://www.curseforge.com/minecraft/mc-mods/gentlereminders"} />: {curseforgeInfo ? curseforgeInfo.GRDownloads : 'Loading'} Downloads</LinkOuter>
+                                <LinkOuter><ModrinthLink href={"https://modrinth.com/mod/gentlereminders"} />: {modrinthInfo ? modrinthInfo.GRDownloads : 'Loading'} Downloads, {modrinthInfo ? modrinthInfo.GRFollowers : 'Loading'} followers</LinkOuter>
                                 <GitHubLink href={"https://github.com/jackperry2187/GentleReminders"} />
                             </div>
                     </CardTitle>
@@ -53,14 +43,26 @@ const Projects = () => {
                         <Desc>
                             Gentle Reminders is a Minecraft mod that sends mindful messages to the player every so often based on a customizable config file.
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="GRBackend">
+                                <Skill>Fabric</Skill>
+                                <Skill>Gradle</Skill>
+                                <Skill>Java</Skill>
+                                <Skill>Java NIO</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="GRPractical">
+                                <Skill>Eclipse</Skill>
+                                <Skill>IntelliJ</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
                 <Card>
                     <CardTitle>
                             <Title>Epitheca</Title>
                             <div className="flex gap-4 justify-center pt-3">
-                                <LinkOuter><CurseforgeLink href={"https://www.curseforge.com/minecraft/mc-mods/epitheca"} />: {EpCFDownloads} Downloads</LinkOuter>
-                                <LinkOuter><ModrinthLink href={"https://modrinth.com/mod/epitheca"} />: {EpMRDownloads} Downloads, {EpMRFollowers} followers</LinkOuter>
+                                <LinkOuter><CurseforgeLink href={"https://www.curseforge.com/minecraft/mc-mods/epitheca"} />: {curseforgeInfo ? curseforgeInfo.EpDownloads : 'Loading'} Downloads</LinkOuter>
+                                <LinkOuter><ModrinthLink href={"https://modrinth.com/mod/epitheca"} />: {modrinthInfo ? modrinthInfo.EpDownloads : 'Loading'} Downloads, {modrinthInfo ? modrinthInfo.EpFollowers : 'Loading'} followers</LinkOuter>
                                 <GitHubLink href={"https://github.com/jackperry2187/epitheca"} />
                             </div>
                     </CardTitle>
@@ -68,6 +70,20 @@ const Projects = () => {
                         <Desc>
                             Epitheca is a Minecraft mod that adds a variety of new craftable variants of existing blocks and items.
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="EpBackend">
+                                <Skill>Fabric</Skill>
+                                <Skill>Gradle</Skill>
+                                <Skill>Java</Skill>
+                                <Skill>Java NIO</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="EpPractical">
+                                <Skill>Aseprite</Skill>
+                                <Skill>Eclipse</Skill>
+                                <Skill>IntelliJ</Skill>
+                                <Skill>Paint.net</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
             </ModRow>
@@ -80,8 +96,31 @@ const Projects = () => {
                     </CardTitle>
                     <CardBody>
                         <Desc>
-                            A web app I made for mostly personal use in order to keep track of a Magic: The Gathering collection of cards. Supports creating inventories and decks, adding/transfering/removing cards to/from them, bulk searching, and integrates with the Scryfall API.
+                            A web app that allows the user to keep track of a collection of Magic: The Gathering cards. Supports creating inventories and decks, adding/transfering/removing cards to/from them, bulk searching, and integrates with the Scryfall API.
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="CCGSuiteFrontend">
+                                <Skill>CSS</Skill>
+                                <Skill>HTML5</Skill>
+                                <Skill>Next.js</Skill>
+                                <Skill>React</Skill>
+                                <Skill>Radix</Skill>
+                                <Skill>Tailwind</Skill>
+                                <Skill>TanStack Query</Skill>
+                                <Skill>Zustand</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="CCGSuiteBackend">
+                                <Skill>Prisma</Skill>
+                                <Skill>tRPC</Skill>
+                                <Skill>Zod</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="CCGSuitePractical">
+                                <Skill>Clerk</Skill>
+                                <Skill>Node.js</Skill>
+                                <Skill>JavaScript</Skill>
+                                <Skill>TypeScript</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
                 <Card>
@@ -90,8 +129,29 @@ const Projects = () => {
                     </CardTitle>
                     <CardBody>
                         <Desc>
-                            The Depression Anxiety Wellness Network (DAWN) was created to help students and adults who suffer from mental illnesses. Since then, it has grown to be a helpful resource available to everybody. With many different features, DAWN is a place where anybody can go to help themselves cope, breathe, or smile when life gets stressful.
+                            The Depression Anxiety Wellness Network (DAWN) was created to centralize mental health resources for both students and adults. This included resources such as local yoga studios, schools, breathing and grounding techniques, and more. Partnered with both Feeling Swell (a local clothing company) and the Society for the Prevention of Teen Suicide. Unfortunately came to a close due to COVID.
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="DAWNFrontend">
+                                <Skill>Bootstrap 5</Skill>
+                                <Skill>CSS</Skill>
+                                <Skill>HTML5</Skill>
+                                <Skill>Handlebars.js</Skill>
+                                <Skill>JQuery</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="DAWNBackend">
+                                <Skill>BCrypt</Skill>
+                                <Skill>Express.js</Skill>
+                                <Skill>Firestore</Skill>
+                                <Skill>Redis</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="DAWNPractical">
+                                <Skill>Firebase</Skill>
+                                <Skill>Google Analytics</Skill>
+                                <Skill>JavaScript</Skill>
+                                <Skill>Trello</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
                 <Card>
@@ -100,8 +160,22 @@ const Projects = () => {
                     </CardTitle>
                     <CardBody>
                         <Desc>
-                            2018 Monmouth University Summer Research Project. 
+                            A virtual reality simulation of the Barnegat Bay created for the 2018 Monmouth University Summer Research Program. 
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="VRBBFrontend">
+                                <Skill>Unity UI Design</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="VRBBBackend">
+                                <Skill>C#</Skill>
+                                <Skill>Oculus Integration SDK</Skill>
+                                <Skill>OVRPlugin</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="VRBBPractical">
+                                <Skill>Unity</Skill>
+                                <Skill>Virtual Reality</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
                 <Card>
@@ -112,6 +186,26 @@ const Projects = () => {
                         <Desc>
                            An extension of the Life Skills Suite which allows teachers and students to create and take assignments. Constructed across two semesters during CS423 and CS424: Senior Design I and II.
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="APFrontend">
+                                <Skill>CSS</Skill>
+                                <Skill>HTML5</Skill>
+                                <Skill>Material UI v4</Skill>
+                                <Skill>React</Skill>
+                                <Skill>React Router</Skill>
+                                <Skill>Redux</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="APBackend">
+                                <Skill>Express.js</Skill>
+                                <Skill>MongoDB</Skill>
+                                <Skill>Mongoose</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="APPractical">
+                                <Skill>JavaScript</Skill>
+                                <Skill>Node.js</Skill>
+                                <Skill>TypeScript</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
                 <Card>
@@ -123,6 +217,27 @@ const Projects = () => {
                         <Desc>
                             Trello-Clone final group project website for CS 546: Web Programming I in a team of 5.
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="BHFrontend">
+                                <Skill>Bootstrap 5</Skill>
+                                <Skill>CSS</Skill>
+                                <Skill>HTML5</Skill>
+                                <Skill>Handlebars.js</Skill>
+                                <Skill>JQuery</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="BHBackend">
+                                <Skill>BCrypt</Skill>
+                                <Skill>Express.js</Skill>
+                                <Skill>Google Calendar API</Skill>
+                                <Skill>MongoDB</Skill>
+                                <Skill>XSS</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="BHPractical">
+                                <Skill>JavaScript</Skill>
+                                <Skill>Node.js</Skill>
+                                <Skill>Trello</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
                 <Card>
@@ -134,6 +249,23 @@ const Projects = () => {
                         <Desc>
                             Final project website for CS-545: Human Computer Interaction.
                         </Desc>
+                        <Skills>
+                            <SkillGroup id="TPFrontend">
+                                <Skill>Bootstrap 5</Skill>
+                                <Skill>CSS</Skill>
+                                <Skill>HTML5</Skill>
+                                <Skill>Handlebars.js</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="TPBackend">
+                                <Skill>BCrypt</Skill>
+                                <Skill>Express.js</Skill>
+                                <Skill>MongoDB</Skill>
+                            </SkillGroup>
+                            <SkillGroup id="TPPractical">
+                                <Skill>JavaScript</Skill>
+                                <Skill>Node.js</Skill>
+                            </SkillGroup>
+                        </Skills>
                     </CardBody>
                 </Card>
             </Row>
@@ -193,9 +325,11 @@ const Desc = (
     }>
 ) => {
     return (
-        <p className="">
-            {children}
-        </p>
+        <Expander header="Description" startsOpen>
+            <div className="p-2">
+                {children}
+            </div>
+        </Expander>
     );
 }
 

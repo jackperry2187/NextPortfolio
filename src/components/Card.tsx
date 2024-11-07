@@ -6,7 +6,7 @@ const Card = (
     }>
  ) => {
     return (
-        <div className="flex flex-col items-center rounded-xl border-2 border-slate-500 overflow-auto">
+        <div className="flex flex-col items-center rounded-xl border-2 border-slate-500 p-4">
             {children}
         </div>
     );
@@ -34,7 +34,7 @@ const CardBody = (
     }>
 ) => {
     return (
-        <div className="flex flex-col text-slate-200 m-6 p-6 rounded-xl border-2 border-slate-400">
+        <div className="flex flex-col text-slate-200 m-6 p-6 rounded-xl border-2 border-slate-400 w-full h-full">
             {children}
         </div>
     );
