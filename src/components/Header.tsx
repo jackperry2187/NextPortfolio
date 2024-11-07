@@ -7,22 +7,22 @@ const Header = () => {
 
     return (
         <nav className="flex justify-center bg-slate-800 border-b-2 border-slate-700 text-slate-400">
-                <div>
-                    <ul className="flex gap-10 text-3xl p-5">
+                <div className="w-full">
+                    <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 text-3xl p-5 text-center">
                         <li className="hover:text-slate-100">
-                            <Link className={"nav-link h3" + (pathname === '/' ? ' text-slate-100' : '')} href="/">Portfolio</Link>
+                            <Link className={(pathname === '/' ? ' text-slate-100' : '')} href="/">Portfolio</Link>
                         </li>
                         <li className="hover:text-slate-100">
-                            <Link className={"nav-link h3" + (pathname === '/experience' ? ' text-slate-100' : '')} href="/experience">Experience</Link>
+                            <Link className={(pathname === '/experience' ? ' text-slate-100' : '')} href="/experience">Experience</Link>
                         </li>
                         <li className="hover:text-slate-100">
-                            <Link className={"nav-link h3" + (pathname === '/projects' ? ' text-slate-100' : '')} href="/projects">Projects</Link>
+                            <Link className={(pathname === '/projects' ? ' text-slate-100' : '')} href="/projects">Projects</Link>
                         </li>
                         <li className="hover:text-slate-100">
-                            <Link className={"nav-link h3" + (pathname === '/classes' ? ' text-slate-100' : '')} href="/classes">Classes</Link>
+                            <Link className={(pathname === '/classes' ? ' text-slate-100' : '')} href="/classes">Classes</Link>
                         </li>
                         <li className="hover:text-slate-100">
-                            <Link className={"nav-link h3" + (pathname === '/resume' ? ' text-slate-100' : '')} href="/resume">Resume</Link>
+                            <Link className={(pathname === '/resume' ? ' text-slate-100' : '')} href="/resume">Resume</Link>
                         </li>
                     </ul>
                 </div>
