@@ -57,7 +57,7 @@ export const ThinkAlpha = () => {
                 <Date>March 2022 - May 2024</Date>
                 <JobTitle>Full-Stack Engineer</JobTitle>
                 <Company>
-                    <WebLink href="https://thinkalpha.io/">ThinkALPHA Technologies</WebLink>
+                    <WebLink href="https://thinkalpha.io/">THINKalpha Technologies</WebLink>
                 </Company>
                 <Location>Remote</Location>
             </CardTitle>
