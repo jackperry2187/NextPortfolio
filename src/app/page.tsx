@@ -29,7 +29,7 @@ const HomePage = () => {
   }, [timeRan]);
 
   return (
-    <div className="container flex flex-col items-center justify-center px-4 py-16">
+    <div className="container flex flex-col flex-grow items-center justify-center px-4 py-16">
       <div className="lg:flex">
         <div className="flex flex-grow flex-col items-center place-content-center p-2">
           <h1 className="text-7xl">

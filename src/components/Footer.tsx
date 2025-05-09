@@ -33,5 +33,4 @@ const Footer = () => {
         </nav>
     );
 }
-
 export default Footer;

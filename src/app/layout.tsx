@@ -19,7 +19,7 @@ const RootLayout = ({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body className="flex flex-col min-h-screen max-h-screen">
         <Header />
-        <main className="flex flex-grow flex-col items-center justify-center bg-slate-800 text-white">
+        <main className="flex flex-grow flex-col items-center bg-slate-800 text-white">
           {children}
         </main>
         <Footer />
@@ -28,5 +28,5 @@ const RootLayout = ({
     </html>
   );
 }
-
 export default RootLayout;
+
