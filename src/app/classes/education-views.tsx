@@ -22,7 +22,7 @@ interface EducationDataProps { // RENAMED & CONSOLIDATED: Was ViewProps and Chro
 // ========== DATA DEFINITIONS & HELPERS (Chronological & Institution Views) ==========
 
 // Defines the order of institutions for sorting and display
-const institutionPreference: { [key: string]: number } = {
+const institutionPreference: Record<string, number> = {
   "Stevens Institute of Technology": 1,
   "Ocean County College": 2,
   "Point Pleasant Boro High School": 3,
@@ -30,7 +30,7 @@ const institutionPreference: { [key: string]: number } = {
 };
 
 // Defines the order of semesters for sorting
-const semesterOrder: { [key: string]: number } = {
+const semesterOrder: Record<string, number> = {
   'AP': 0,
   'High School': 0.1, // Slightly after AP to group them together if year is same
   'Spring': 1,
@@ -44,20 +44,18 @@ const semesterOrder: { [key: string]: number } = {
 
 // Helper to get a sortable key from a semester string
 const getSemesterSortKey = (semester: string | undefined): number => {
-  if (!semester) return semesterOrder['Other'] as number;
+  if (!semester) return semesterOrder.Other!;
   
-  // Try to match specific sessioned summers first
-  // The key `semester` here refers to strings like "Summer (Session 1)"
   if (semester.startsWith("Summer (Session")) {
-    return (semesterOrder[semester] ?? semesterOrder['Summer'] ?? semesterOrder['Other']) as number;
+    return (semesterOrder[semester] ?? semesterOrder.Summer ?? semesterOrder.Other)!;
   }
   
   const parts = semester.split(' ');
-  const generalSemesterKey = parts[0]; // "Spring" from "Spring 2024"
+  const generalSemesterKey = parts[0]; 
 
-  if (!generalSemesterKey) return semesterOrder['Other'] as number; // Handle cases like empty string after split
+  if (!generalSemesterKey) return semesterOrder.Other!;
 
-  return (semesterOrder[generalSemesterKey] ?? semesterOrder['Other']) as number;
+  return (semesterOrder[generalSemesterKey] ?? semesterOrder.Other)!;
 };
 
 
@@ -66,7 +64,7 @@ const getSemesterKey = (course: CourseInfo): string => {
   if (course.institution === "Point Pleasant Boro High School") {
     return course.name.startsWith("AP") ? "AP" : "High School";
   }
-  return course.semester || "Other"; // Fallback for courses without a semester
+  return course.semester ?? "Other"; // Fallback for courses without a semester
 };
 
 // ========== REUSABLE NAVIGATION HEADER COMPONENT ==========
@@ -133,17 +131,15 @@ const TitledCourseGroupBlock: React.FC<TitledCourseGroupBlockProps> = ({
       <div className="space-y-3 pr-1">
         {groupByInstitution ? (
           (() => {
-            const coursesByInstitution: { [institution: string]: CourseInfo[] } = {};
+            const coursesByInstitution: Record<string, CourseInfo[]> = {};
             courses.forEach(course => {
-              if (!coursesByInstitution[course.institution]) {
-                coursesByInstitution[course.institution] = [];
-              }
-              (coursesByInstitution[course.institution] as CourseInfo[]).push(course);
+              coursesByInstitution[course.institution] ??= [];
+              coursesByInstitution[course.institution]!.push(course);
             });
 
             const sortedInstitutions = Object.keys(coursesByInstitution).sort((instA, instB) => {
-              const preferenceA = (institutionPreference[instA] ?? institutionPreference['Other']) as number;
-              const preferenceB = (institutionPreference[instB] ?? institutionPreference['Other']) as number;
+              const preferenceA = (institutionPreference[instA] ?? institutionPreference.Other)!;
+              const preferenceB = (institutionPreference[instB] ?? institutionPreference.Other)!;
               if (preferenceA !== preferenceB) return preferenceA - preferenceB;
               return instA.localeCompare(instB);
             });
@@ -191,8 +187,8 @@ const ChronologicalView: React.FC<EducationDataProps> = ({ stevensCourses, occCo
       const year = course.year;
       const semesterKeyToGroup = getSemesterKey(course); 
       
-      if (!acc[year]) acc[year] = {};
-      if (!acc[year][semesterKeyToGroup]) acc[year][semesterKeyToGroup] = [];
+      acc[year] ??= {};
+      acc[year][semesterKeyToGroup] ??= [];
       acc[year][semesterKeyToGroup].push(course);
       return acc;
     }, {} as Record<number, Record<string, CourseInfo[]>>);
@@ -228,7 +224,7 @@ const ChronologicalView: React.FC<EducationDataProps> = ({ stevensCourses, occCo
   };
 
   const displayedYear = sortedYears.length > 0 && currentYearIndex >= 0 && currentYearIndex < sortedYears.length ? sortedYears[currentYearIndex] : undefined;
-  const semestersAndCoursesForDisplayedYear = displayedYear !== undefined ? (coursesByYearAndSemester[displayedYear] || {}) : {};
+  const semestersAndCoursesForDisplayedYear = displayedYear !== undefined ? (coursesByYearAndSemester[displayedYear] ?? {}) : {};
   const sortedSemesterKeysForDisplay = Object.keys(semestersAndCoursesForDisplayedYear)
     .sort((semA, semB) => getSemesterSortKey(semA) - getSemesterSortKey(semB));
   const numberOfActiveSemesters = sortedSemesterKeysForDisplay.length;
@@ -246,7 +242,7 @@ const ChronologicalView: React.FC<EducationDataProps> = ({ stevensCourses, occCo
       <div className="flex flex-col items-center w-full">
         <div className={`flex pb-4 ${numberOfActiveSemesters > 3 ? 'overflow-x-auto scrollbar-thin scrollbar-track-slate-800 space-x-4' : 'flex-wrap gap-4'} w-full px-2`}>
           {sortedSemesterKeysForDisplay.map(semesterKey => {
-            const coursesInSemester = semestersAndCoursesForDisplayedYear[semesterKey] || []; 
+            const coursesInSemester = semestersAndCoursesForDisplayedYear[semesterKey] ?? []; 
             if (coursesInSemester.length === 0) return null;
 
             let columnWidthClasses = "";
@@ -264,7 +260,7 @@ const ChronologicalView: React.FC<EducationDataProps> = ({ stevensCourses, occCo
             if (displayedYear === 2025 && semesterKey.startsWith("Summer (Session")) {
                 const representativeCourse = coursesInSemester.find(c => 
                     c.institution === "Ocean County College" && 
-                    c.semester?.startsWith(semesterKey)
+                    (c.semester?.startsWith(semesterKey) ?? false)
                 );
                 if (representativeCourse?.semester) {
                     displaySemesterTitle = representativeCourse.semester;
@@ -320,8 +316,8 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
 
     // Group Stevens courses by semester
     const stevensBySemester = stevensCourses.reduce((acc, course) => {
-        const key = course.semester || "Unknown Semester";
-        if (!acc[key]) acc[key] = [];
+        const key = course.semester ?? "Unknown Semester";
+        acc[key] ??= [];
         acc[key].push(course);
         return acc;
     }, {} as Record<string, CourseInfo[]>);
@@ -329,8 +325,8 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
 
     // Group OCC courses by semester
     const occBySemester = occCourses.reduce((acc, course) => {
-        const key = course.semester || "Unknown Semester";
-        if (!acc[key]) acc[key] = [];
+        const key = course.semester ?? "Unknown Semester";
+        acc[key] ??= [];
         acc[key].push(course);
         return acc;
     }, {} as Record<string, CourseInfo[]>);
@@ -345,7 +341,7 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
     // For PPBHS, we'll display each year as a block, similar to original static page.
     const ppbhsByYear = ppbhsCourses.reduce((acc, course) => {
         const key = course.year.toString();
-        if (!acc[key]) acc[key] = [];
+        acc[key] ??= [];
         acc[key].push(course);
         return acc;
     }, {} as Record<string, CourseInfo[]>);
@@ -370,7 +366,7 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
                                     <TitledCourseGroupBlock 
                                         key={semester} 
                                         title={semester} 
-                                        courses={stevensBySemester[semester]} 
+                                        courses={stevensBySemester[semester]}
                                         groupByInstitution={false}
                                         blockClasses={conditionalBlockClasses}
                                     />
@@ -395,7 +391,7 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
                                     <TitledCourseGroupBlock 
                                         key={semester} 
                                         title={semester} 
-                                        courses={occBySemester[semester]} 
+                                        courses={occBySemester[semester]}
                                         groupByInstitution={false}
                                         blockClasses={conditionalBlockClasses}
                                     />
@@ -420,7 +416,7 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
                                     <TitledCourseGroupBlock 
                                         key={year} 
                                         title={year} 
-                                        courses={ppbhsByYear[year]} 
+                                        courses={ppbhsByYear[year]}
                                         groupByInstitution={false}
                                         blockClasses={conditionalBlockClasses}
                                     />
