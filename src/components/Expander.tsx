@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback, useState } from "react";
 import CaretDownFill from "./icons/CaretDownFill";
 import CaretDown from "./icons/CaretDown";
