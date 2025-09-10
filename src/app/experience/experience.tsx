@@ -6,6 +6,41 @@ import { Calendar } from "~/components/icons";
 import { WebLink } from "~/components/Link";
 import { Skill, SkillGroup, Skills } from "~/components/Skills";
 
+export const BBC = () => {
+    return (
+        <Card>
+            <CardTitle>
+                <Date>July 2025 - Present</Date>
+                <JobTitle>Junior Software Engineer</JobTitle>
+                <Company>
+                    <WebLink href="https://www.bbc.co.uk/iplayer">British Broadcasting Corporation - iPlayer</WebLink>
+                </Company>
+                <Location>London, UK</Location>
+            </CardTitle>
+            <CardBody>
+                <Skills>
+                    <SkillGroup id="BBCPractical">
+                        <Skill>Agile Methodologies</Skill>
+                        <Skill>Amazon Web Services</Skill>
+                        <Skill>Code Review</Skill>
+                        <Skill>Git / GitHub</Skill>
+                        <Skill>JavaScript</Skill>
+                        <Skill>Jira</Skill>
+                        <Skill>Node.js</Skill>
+                        <Skill>TypeScript</Skill>
+                        <Skill>Slack</Skill>
+                    </SkillGroup>
+                </Skills>
+                <ProfessionalSummary>
+                    <li>Working on the backend team to help improve the quality of the codebase and the overall experience for the users.</li>
+                    <li>Focusing on learning new technologies and overall improvement of my skills, with a main focus on exposure to AWS.</li>
+                    <li>Furthering the learning process by utilizing services such as Pluralsight and BBC Academy Courses to solidify my command of AWS.</li>
+                </ProfessionalSummary>
+            </CardBody>
+        </Card>
+    )
+}
+
 export const HiveMind = () => {
     return (
         <Card>
