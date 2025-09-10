@@ -379,7 +379,7 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
                 return (
                     <div className="flex flex-col items-center w-full">
                         <h2 className="text-4xl p-1">Associate of Science in Business Administration</h2>
-                        <h3 className="text-xl p-1 pb-3">Coursework from 2019, 2021, and planned for 2025</h3>
+                        <h3 className="text-xl p-1 pb-3">Coursework from 2019, 2021, and 2025</h3>
                         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5 gap-4 px-2 mt-4 w-full">
                             {occSemesterOrder.map((semester, index) => {
                                 if (!occBySemester[semester]) return null;
