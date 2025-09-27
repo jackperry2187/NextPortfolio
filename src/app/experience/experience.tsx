@@ -32,9 +32,12 @@ export const BBC = () => {
                     </SkillGroup>
                 </Skills>
                 <ProfessionalSummary>
-                    <li>Working on the backend team to help improve the quality of the codebase and the overall experience for the users.</li>
-                    <li>Focusing on learning new technologies and overall improvement of my skills, with a main focus on exposure to AWS.</li>
-                    <li>Furthering the learning process by utilizing services such as Pluralsight and BBC Academy Courses to solidify my command of AWS.</li>
+                    <li>Programming robust backend systems in JavaScript and TypeScript which scale for millions of requests per day</li>
+                    <li>Ensuring that documentation is consistent and of high quality to be used by multiple departments within the company.</li>
+                    <li>Contributing to the maintenance of thousands of GitHub repositories and Amazon Web Services which serve as the
+                    infrastructure for both thousands of employees and millions of worldwide consumers.</li>
+                    <li>Furthering my AWS experience by completing internal courses and pursuing Amazon-provided certifications.</li>
+                    <li>Converting legacy polling-based services to event-driven architecture leading to higher efficiency and lowered costs.</li>
                 </ProfessionalSummary>
             </CardBody>
         </Card>
@@ -73,12 +76,12 @@ export const HiveMind = () => {
                     </SkillGroup>
                 </Skills>
                 <ProfessionalSummary>
-                    <li>Overseeing all financial operations, including account setup, tax identification acquisition, and transaction management via QuickBooks.</li>
-                    <li>Compile and provide financial statements and reports to partners on a monthly basis, detailing earnings, expenses, and outstanding obligations.</li>
-                    <li>Utilize Paint.net to design and create visually appealing thumbnails and channel art to attract viewers and subscribers.</li>
-                    <li>Assisted with the design of promotional game tokens featuring custom artwork and branded information, distributed as free marketing items to boost channel visibility and audience engagement.</li>
-                    <li>Manage and maintain a consistent streaming schedule on Twitch, engaging with viewers and promoting the channel to increase followers and subscribers.</li>
-                    <li>Produce high-quality video content from recorded streams, leading to a steady five-day upload schedule to YouTube.</li>
+                    <li>Utilizing QuickBooks to oversee all financial operations including journal entries, accounts payable, and reconciliation.</li>
+                    <li>Compiling monthly financial reports with Microsoft Word, Microsoft Excel, and QuickBooks to present to members.</li>
+                    <li>Led an initiative to develop art for over 30 unique game tokens used for advertising the company.</li>
+                    <li>Participated in the setup and running of a yearly tournament event with our audience in all areas including production management, tournament organization, equipment setup, financial planning, and financial analysis</li>
+                    <li>Automated the creation of weekly thumbnails utilizing Web Development and Artificial Intelligence skills leading to an 85% decrease in completion time.</li>
+                    <li>Automated the propagation of previously-created content to additional platforms, allowing for the content to have further reach and result in significantly higher and more diverse audience growth.</li>
                 </ProfessionalSummary>
             </CardBody>
         </Card>
