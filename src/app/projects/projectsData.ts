@@ -4,8 +4,8 @@ export interface ProjectSkillGroup {
   skills: string[];
 }
 
-export type CurseforgeStatKey = "GRDownloads" | "EpDownloads";
-export type ModrinthStatKey = "GRDownloads" | "EpDownloads" | "GRFollowers" | "EpFollowers";
+export type CurseforgeStatKey = "GRDownloads" | "EfDownloads" | "EpDownloads";
+export type ModrinthStatKey = "GRDownloads" | "EfDownloads" | "EpDownloads" | "GRFollowers" | "EfFollowers" | "EpFollowers";
 
 
 export interface ModStatKeys {
@@ -56,8 +56,28 @@ export const allProjectsData: ProjectData[] = [
     githubHref: "https://github.com/jackperry2187/GentleReminders",
     description: "Gentle Reminders is a Minecraft mod that sends mindful messages to the player every so often based on a customizable config file.",
     skills: [
-      { id: "GRBackend", skills: ["Fabric", "Gradle", "Java", "Java NIO"] },
+      { id: "GRBackend", skills: ["Fabric", "NeoForge", "Gradle", "Java", "Java NIO"] },
       { id: "GRPractical", skills: ["Eclipse", "IntelliJ"] }
+    ]
+  },
+  {
+    id: "effigies",
+    type: 'mod',
+    title: "Effigies",
+    modLinks: {
+      curseforgePagePath: "minecraft/mc-mods/jackperry2187-effigies",
+      modrinthPagePath: "mod/effigies",
+    },
+    statKeys: {
+      curseforgeDownloadsKey: "EfDownloads",
+      modrinthDownloadsKey: "EfDownloads",
+      modrinthFollowersKey: "EfFollowers",
+    },
+    githubHref: "https://github.com/jackperry2187/Effigies",
+    description: "A Minecraft mod that adds powerful mob spawning prevention options to the game.",
+    skills: [
+      { id: "EpBackend", skills: ["Fabric", "NeoForge", "Gradle", "Java", "Java NIO"] },
+      { id: "EpPractical", skills: ["Cursor", "Paint.net"] }
     ]
   },
   {

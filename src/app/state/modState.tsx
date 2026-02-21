@@ -16,6 +16,14 @@ export const useModStore = create<ModStore>()(
                     }
                 }).then((res) => res.json() as Promise<ModrinthResponse>);
             
+
+                const Effigies = await fetch(`https://api.modrinth.com/v2/project/2seiKgF8`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                }).then((res) => res.json() as Promise<ModrinthResponse>);
+
                 const Epitheca = await fetch(`https://api.modrinth.com/v2/project/GQBNryV8`, {
                     method: 'GET',
                     headers: {
@@ -26,6 +34,8 @@ export const useModStore = create<ModStore>()(
                 set({ modrinth: {
                     GRDownloads: GentleReminders.downloads,
                     GRFollowers: GentleReminders.followers,
+                    EfDownloads: Effigies.downloads,
+                    EfFollowers: Effigies.followers,
                     EpDownloads: Epitheca.downloads,
                     EpFollowers: Epitheca.followers
                 }});
@@ -44,6 +54,14 @@ export const useModStore = create<ModStore>()(
                     }
                 }).then((res) => res.json() as Promise<CurseforgeResponse>);
             
+                const Effigies: CurseforgeResponse = await fetch(`https://api.curseforge.com/v1/mods/1441117`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'x-api-key': "$2a$10$uzfm11K.3f8pYOYkvrnnt.Ugsj4.wsX4qutoD3w9OEfvtXn6/9kOi" // TODO: move to env
+                    }
+                }).then((res) => res.json() as Promise<CurseforgeResponse>);
+
                 const Epitheca: CurseforgeResponse = await fetch(`https://api.curseforge.com/v1/mods/1102378`, {
                     method: 'GET',
                     headers: {
@@ -54,6 +72,7 @@ export const useModStore = create<ModStore>()(
 
                 set({ curseforge: {
                     GRDownloads: GentleReminders.data.downloadCount,
+                    EfDownloads: Effigies.data.downloadCount,
                     EpDownloads: Epitheca.data.downloadCount
                 }});
             },

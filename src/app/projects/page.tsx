@@ -7,6 +7,7 @@ import { Expander } from "~/components/Expander";
 import { Skill, SkillGroup, Skills } from "~/components/Skills";
 import { allProjectsData } from "./projectsData";
 import { ModProjectClientInfo } from "./ModProjectClientInfo";
+import { ProjectViewManager } from "./ProjectViewManager";
 
 const Projects = () => {
     const modProjects = allProjectsData.filter(p => p.type === 'mod');
@@ -14,76 +15,79 @@ const Projects = () => {
 
     return (
         <div className="flex flex-col text-slate-200 py-1">
-            <CardTitle>Modding Projects</CardTitle>
-            <ModRow>
-                {modProjects.map((project) => {
-                    if (project.type !== 'mod') return null;
-                    return (
-                        <Card key={project.id}>
-                            <CardTitle>
-                                <Title>{project.title}</Title>
-                                <div className="flex gap-4 justify-center pt-3">
-                                    <ModProjectClientInfo
-                                        curseforgePagePath={project.modLinks.curseforgePagePath}
-                                        modrinthPagePath={project.modLinks.modrinthPagePath}
-                                        statKeys={project.statKeys}
-                                    />
-                                    {project.githubHref && <GitHubLink href={project.githubHref} />}
-                                </div>
-                            </CardTitle>
-                            <CardBody>
-                                <Desc>
-                                    {project.description}
-                                </Desc>
-                                <Skills>
-                                    {project.skills.map(group => (
-                                        <SkillGroup key={group.id} id={group.id}>
-                                            {group.skills.map(skill => <Skill key={skill}>{skill}</Skill>)}
-                                        </SkillGroup>
-                                    ))}
-                                </Skills>
-                            </CardBody>
-                        </Card>
-                    );
-                })}
-            </ModRow>
-
-            <CardTitle>Web Projects</CardTitle>
-            <Row>
-                {webProjects.map((project) => {
-                    if (project.type !== 'web') return null;
-                    return (
-                        <Card key={project.id}>
-                            <CardTitle>
-                                <Title>
-                                    {project.webLink ? (
-                                        <WebLink href={project.webLink}>{project.title}</WebLink>
-                                    ) : (
-                                        project.title
-                                    )}
-                                </Title>
-                                {project.githubHref && (
-                                    <div className="flex justify-center pt-2">
-                                        <GitHubLink href={project.githubHref} />
-                                    </div>
-                                )}
-                            </CardTitle>
-                            <CardBody>
-                                <Desc>
-                                    {project.description}
-                                </Desc>
-                                <Skills>
-                                    {project.skills.map(group => (
-                                        <SkillGroup key={group.id} id={group.id}>
-                                            {group.skills.map(skill => <Skill key={skill}>{skill}</Skill>)}
-                                        </SkillGroup>
-                                    ))}
-                                </Skills>
-                            </CardBody>
-                        </Card>
-                    );
-                })}
-            </Row>
+            <ProjectViewManager
+                moddingContent={
+                    <ModRow>
+                        {modProjects.map((project) => {
+                            if (project.type !== 'mod') return null;
+                            return (
+                                <Card key={project.id}>
+                                    <CardTitle>
+                                        <Title>{project.title}</Title>
+                                        <div className="flex gap-4 justify-center pt-3">
+                                            <ModProjectClientInfo
+                                                curseforgePagePath={project.modLinks.curseforgePagePath}
+                                                modrinthPagePath={project.modLinks.modrinthPagePath}
+                                                statKeys={project.statKeys}
+                                            />
+                                            {project.githubHref && <GitHubLink href={project.githubHref} />}
+                                        </div>
+                                    </CardTitle>
+                                    <CardBody>
+                                        <Desc>
+                                            {project.description}
+                                        </Desc>
+                                        <Skills>
+                                            {project.skills.map(group => (
+                                                <SkillGroup key={group.id} id={group.id}>
+                                                    {group.skills.map(skill => <Skill key={skill}>{skill}</Skill>)}
+                                                </SkillGroup>
+                                            ))}
+                                        </Skills>
+                                    </CardBody>
+                                </Card>
+                            );
+                        })}
+                    </ModRow>
+                }
+                webContent={
+                    <Row>
+                        {webProjects.map((project) => {
+                            if (project.type !== 'web') return null;
+                            return (
+                                <Card key={project.id}>
+                                    <CardTitle>
+                                        <Title>
+                                            {project.webLink ? (
+                                                <WebLink href={project.webLink}>{project.title}</WebLink>
+                                            ) : (
+                                                project.title
+                                            )}
+                                        </Title>
+                                        {project.githubHref && (
+                                            <div className="flex justify-center pt-2">
+                                                <GitHubLink href={project.githubHref} />
+                                            </div>
+                                        )}
+                                    </CardTitle>
+                                    <CardBody>
+                                        <Desc>
+                                            {project.description}
+                                        </Desc>
+                                        <Skills>
+                                            {project.skills.map(group => (
+                                                <SkillGroup key={group.id} id={group.id}>
+                                                    {group.skills.map(skill => <Skill key={skill}>{skill}</Skill>)}
+                                                </SkillGroup>
+                                            ))}
+                                        </Skills>
+                                    </CardBody>
+                                </Card>
+                            );
+                        })}
+                    </Row>
+                }
+            />
         </div>
     )
 }
@@ -112,7 +116,7 @@ const ModRow = (
     }>
 ) => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 p-3 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 p-3 gap-5">
             {children}
         </div>
     );

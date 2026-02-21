@@ -22,11 +22,14 @@ export type CurseforgeResponse = {
 export type ModrinthInfo = {
     GRDownloads: number;
     GRFollowers: number;
+    EfDownloads: number;
+    EfFollowers: number;
     EpDownloads: number;
     EpFollowers: number;
 }
 
 export type CurseforgeInfo = {
     GRDownloads: number;
+    EfDownloads: number;
     EpDownloads: number;
 }
