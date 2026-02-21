@@ -24,6 +24,7 @@ export interface BaseProjectData {
 
 export interface ModProjectData extends BaseProjectData {
   type: 'mod';
+  backgroundImage?: string;
   modLinks: {
     curseforgePagePath: string; // e.g., "minecraft/mc-mods/gentlereminders"
     modrinthPagePath: string;   // e.g., "mod/gentlereminders"
@@ -44,6 +45,7 @@ export const allProjectsData: ProjectData[] = [
     id: "gentle-reminders",
     type: 'mod',
     title: "Gentle Reminders",
+    backgroundImage: "/images/gr_image.png",
     modLinks: {
       curseforgePagePath: "minecraft/mc-mods/gentlereminders",
       modrinthPagePath: "mod/gentlereminders",
@@ -64,6 +66,7 @@ export const allProjectsData: ProjectData[] = [
     id: "effigies",
     type: 'mod',
     title: "Effigies",
+    backgroundImage: "/images/ef_image.png",
     modLinks: {
       curseforgePagePath: "minecraft/mc-mods/jackperry2187-effigies",
       modrinthPagePath: "mod/effigies",
@@ -84,6 +87,7 @@ export const allProjectsData: ProjectData[] = [
     id: "epitheca",
     type: 'mod',
     title: "Epitheca",
+    backgroundImage: "/images/ep_image.png",
     modLinks: {
       curseforgePagePath: "minecraft/mc-mods/epitheca",
       modrinthPagePath: "mod/epitheca",

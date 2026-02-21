@@ -3,12 +3,14 @@ import { Expander } from "./Expander";
 const Skills = (
     {
         children,
+        startsOpen,
     }: Readonly<{
         children: React.ReactNode;
+        startsOpen?: boolean;
     }>
 ) => {
     return (
-        <Expander startsOpen={false} header="Skills">
+        <Expander startsOpen={startsOpen ?? false} header="Skills">
             {children}
         </Expander>
     )

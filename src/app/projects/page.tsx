@@ -21,7 +21,7 @@ const Projects = () => {
                         {modProjects.map((project) => {
                             if (project.type !== 'mod') return null;
                             return (
-                                <Card key={project.id}>
+                                <Card key={project.id} backgroundImage={project.backgroundImage}>
                                     <CardTitle>
                                         <Title>{project.title}</Title>
                                         <div className="flex gap-4 justify-center pt-3">
@@ -37,7 +37,7 @@ const Projects = () => {
                                         <Desc>
                                             {project.description}
                                         </Desc>
-                                        <Skills>
+                                        <Skills startsOpen={true}>
                                             {project.skills.map(group => (
                                                 <SkillGroup key={group.id} id={group.id}>
                                                     {group.skills.map(skill => <Skill key={skill}>{skill}</Skill>)}
