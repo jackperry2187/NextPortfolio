@@ -32,12 +32,14 @@ export const BBC = () => {
                     </SkillGroup>
                 </Skills>
                 <ProfessionalSummary>
-                    <li>Programming robust backend systems in JavaScript and TypeScript which scale for millions of requests per day</li>
+                    <li>Programming robust backend systems in JavaScript and TypeScript which scale for millions of requests per day.</li>
                     <li>Ensuring that documentation is consistent and of high quality to be used by multiple departments within the company.</li>
-                    <li>Contributing to the maintenance of thousands of GitHub repositories and Amazon Web Services which serve as the
-                    infrastructure for both thousands of employees and millions of worldwide consumers.</li>
-                    <li>Furthering my AWS experience by completing internal courses and pursuing Amazon-provided certifications.</li>
+                    <li>Contributing to the maintenance of thousands of GitHub repositories and Amazon Web Services which serve as the infrastructure for both thousands of employees and millions of worldwide consumers.</li>
+                    <li>Participating in the development of a new feature for the iPlayer website which allows users to watch content on their TV.</li>
                     <li>Converting legacy polling-based services to event-driven architecture leading to higher efficiency and lowered costs.</li>
+                    <li>Championing the usage of Artificial Intelligence tools and conducting knowledge shares across the entire organization.</li>
+                    <li>Lead a team of five resulting in the creation of a BBC Wrapped prototype as part of the 2025 Hack Week.</li>
+                    <li>Designed and delivered a presentation on Gamifying Retrospection at Develop BBC 2026 to an audience of over 500.</li>
                 </ProfessionalSummary>
             </CardBody>
         </Card>
