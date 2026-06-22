@@ -254,7 +254,9 @@ const ChronologicalView: React.FC<EducationDataProps> = ({ stevensCourses, occCo
                 columnWidthClasses = "w-full sm:flex-1 min-w-[280px]";
             } else if (numberOfActiveSemesters === 3) {
                 columnWidthClasses = "w-full md:flex-1 min-w-[280px]";
-            } else { // numberOfActiveSemesters > 3 (scrolling case)
+            } else if (numberOfActiveSemesters === 4) {
+                columnWidthClasses = "w-full lg:flex-1 min-w-[280px]";
+            } else { // numberOfActiveSemesters > 4 (scrolling case)
                 columnWidthClasses = "flex-shrink-0 w-72 md:w-80 lg:w-96";
             }
 
