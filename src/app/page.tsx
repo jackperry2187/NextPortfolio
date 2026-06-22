@@ -38,7 +38,7 @@ const HomePage = () => {
           <h4 className="text-xl text-slate-400">Junior Software Engineer at the British Broadcasting Corporation and the CFO for Hive Mind Entertainment LLC</h4>
         </div>
         <div className="flex flex-grow flex-col items-center p-2">
-          <Image src={me} alt="profile_picture" className="max-w-100 w-3/4 h-auto p-1 bg-white border border-white"/>
+          <Image src={me} alt="profile_picture" className="max-w-100 w-3/4 h-auto p-1 bg-slate-500"/>
         </div>
       </div>
     </div>
