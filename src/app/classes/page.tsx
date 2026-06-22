@@ -78,11 +78,19 @@ const Classes = () => {
         { year: 2020, name: "AP English Literature and Composition | Score: 4", institution: "Point Pleasant Boro High School", semester: "AP/High School" },
     ];
 
+    const certifications = [
+        // 2025
+        { year: 2025, name: "Google Cloud Certified Generative AI Leader", institution: "Certification", semester: "May 2025"},
+        // 2026
+        { year: 2026, name: "Amazon Web Services Certified Solutions Architect - Associate", institution: "Certification", semester: "April 2026"},
+    ]
+
     return (
         <EducationViewManager 
             stevensCourses={stevensCourses} 
             occCourses={occCourses} 
             ppbhsCourses={ppbhsCourses} 
+            certifications={certifications}
         />
     );
 }

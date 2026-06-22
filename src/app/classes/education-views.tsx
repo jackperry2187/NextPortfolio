@@ -17,6 +17,7 @@ interface EducationDataProps { // RENAMED & CONSOLIDATED: Was ViewProps and Chro
   stevensCourses: CourseInfo[];
   occCourses: CourseInfo[];
   ppbhsCourses: CourseInfo[];
+  certifications: CourseInfo[];
 }
 
 // ========== DATA DEFINITIONS & HELPERS (Chronological & Institution Views) ==========
@@ -175,12 +176,13 @@ const TitledCourseGroupBlock: React.FC<TitledCourseGroupBlockProps> = ({
 
 // ========== CHRONOLOGICAL VIEW COMPONENT ==========
 
-const ChronologicalView: React.FC<EducationDataProps> = ({ stevensCourses, occCourses, ppbhsCourses }) => {
+const ChronologicalView: React.FC<EducationDataProps> = ({ stevensCourses, occCourses, ppbhsCourses, certifications }) => {
   const allCoursesCombined = useMemo(() => [
     ...stevensCourses,
     ...occCourses,
     ...ppbhsCourses,
-  ], [stevensCourses, occCourses, ppbhsCourses]);
+    ...certifications,
+  ], [stevensCourses, occCourses, ppbhsCourses, certifications]);
 
   const coursesByYearAndSemester = useMemo(() => {
     return allCoursesCombined.reduce((acc, course) => {
@@ -292,11 +294,12 @@ const CourseCard: React.FC<{ course: CourseInfo }> = ({ course }) => (
     </div>
 );
 
-const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: EducationDataProps) => {
+const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses, certifications }: EducationDataProps) => {
     const institutionDisplayOrder = [
         "Stevens Institute of Technology", 
         "Ocean County College", 
-        "Point Pleasant Boro High School"
+        "Point Pleasant Boro High School",
+        "Certification"
     ];
     const [currentInstitutionIndex, setCurrentInstitutionIndex] = useState(0);
 
@@ -346,6 +349,15 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
         return acc;
     }, {} as Record<string, CourseInfo[]>);
     const ppbhsYearOrder = Object.keys(ppbhsByYear).sort((a,b) => parseInt(a) - parseInt(b));
+
+    // Group certifications by semester
+    const certificationsBySemester = certifications.reduce((acc, certification) => {
+        const key = certification.semester ?? "Unknown Semester";
+        acc[key] ??= [];
+        acc[key].push(certification);
+        return acc;
+    }, {} as Record<string, CourseInfo[]>);
+    const certificationsSemesterOrder = Object.keys(certificationsBySemester).sort((a,b) => b.localeCompare(a));
 
     const renderInstitutionContent = () => {
         // This function now only renders content *below* the main H1 and arrows
@@ -425,6 +437,31 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
                         </div>
                     </div>
                 );
+            case "Certification":
+                return (
+                    <div className="flex flex-col items-center w-full">
+                        <h2 className="text-4xl p-1">Certifications</h2>
+                        <h3 className="text-xl p-1 pb-3">Certifications earned from 2025 to 2026</h3>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-2 mt-4 w-full">
+                            {certificationsSemesterOrder.map((semester, index) => {
+                                if (!certificationsBySemester[semester]) return null;
+                                let conditionalBlockClasses = "";
+                                if (index === certificationsSemesterOrder.length - 1 && certificationsSemesterOrder.length % 2 !== 0) {
+                                    conditionalBlockClasses = "sm:col-span-2 md:col-span-auto";
+                                }
+                                return (
+                                    <TitledCourseGroupBlock 
+                                        key={semester} 
+                                        title={semester} 
+                                        courses={certificationsBySemester[semester]}
+                                        groupByInstitution={false}
+                                        blockClasses={conditionalBlockClasses}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </div>
+                );
             default:
                 return null;
         }
@@ -445,7 +482,7 @@ const InstitutionView = ({ stevensCourses, occCourses, ppbhsCourses }: Education
 
 
 // ========== VIEW MANAGER ==========
-const EducationViewManager = ({ stevensCourses, occCourses, ppbhsCourses }: EducationDataProps) => {
+const EducationViewManager = ({ stevensCourses, occCourses, ppbhsCourses, certifications }: EducationDataProps) => {
   const [currentView, setCurrentView] = useState<'institution' | 'chronological'>('institution');
 
   return (
@@ -484,12 +521,14 @@ const EducationViewManager = ({ stevensCourses, occCourses, ppbhsCourses }: Educ
             stevensCourses={stevensCourses} 
             occCourses={occCourses} 
             ppbhsCourses={ppbhsCourses} 
+            certifications={certifications}
         />
       ) : (
         <ChronologicalView 
             stevensCourses={stevensCourses} 
             occCourses={occCourses} 
-            ppbhsCourses={ppbhsCourses} 
+            ppbhsCourses={ppbhsCourses}   
+            certifications={certifications}
         />
       )}
     </div>
