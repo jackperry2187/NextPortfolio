@@ -8,6 +8,7 @@ import { Skill, SkillGroup, Skills } from "~/components/Skills";
 import { allProjectsData } from "./projectsData";
 import { ModProjectClientInfo } from "./ModProjectClientInfo";
 import { ProjectViewManager } from "./ProjectViewManager";
+import { PlanetMinecraftProjects } from "./PlanetMinecraftProjects";
 
 const Projects = () => {
     const modProjects = allProjectsData.filter(p => p.type === 'mod');
@@ -87,6 +88,9 @@ const Projects = () => {
                         })}
                     </Row>
                 }
+                legacyContent={{
+                    planetminecraft: <PlanetMinecraftProjects />,
+                }}
             />
         </div>
     )
