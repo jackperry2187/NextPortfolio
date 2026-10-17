@@ -1,8 +1,8 @@
 "use client";
 
 import { useShallow } from "zustand/shallow";
-import { useModStore } from "../state/modState";
-import { type ModStatKeys } from "./projectsData";
+import { useModStore } from "../../state/modState";
+import { type ModStatKeys } from "./moddingProjectsData";
 
 const Stat = ({
   label,

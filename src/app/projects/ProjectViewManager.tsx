@@ -1,8 +1,10 @@
 'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import CaretDown from '~/components/icons/CaretDown';
 
-type ProjectView = 'modding' | 'web' | 'legacy';
+export type ProjectView = 'modding' | 'web' | 'legacy';
 export type LegacyView = 'planetminecraft';
 
 const PROJECT_TABS: { id: Exclude<ProjectView, 'legacy'>; label: string }[] = [
@@ -13,6 +15,23 @@ const PROJECT_TABS: { id: Exclude<ProjectView, 'legacy'>; label: string }[] = [
 const LEGACY_TABS: { id: LegacyView; label: string }[] = [
   { id: 'planetminecraft', label: 'PlanetMinecraft' },
 ];
+
+const PROJECT_PATHS: Record<Exclude<ProjectView, 'legacy'>, string> = {
+  modding: '/projects/modding',
+  web: '/projects/web',
+};
+
+const LEGACY_PATHS: Record<LegacyView, string> = {
+  planetminecraft: '/projects/legacy/planetminecraft',
+};
+
+const projectViewFromPathname = (pathname: string | null): ProjectView => {
+  const normalizedPathname = pathname?.replace(/\/+$/, '') ?? '/';
+
+  if (normalizedPathname === '/projects/web') return 'web';
+  if (normalizedPathname === '/projects/legacy/planetminecraft') return 'legacy';
+  return 'modding';
+};
 
 const tabClasses = (active: boolean) =>
   `px-6 py-3 text-lg font-semibold transition-colors focus:outline-none 
@@ -31,8 +50,9 @@ export const ProjectViewManager = ({
   webContent: React.ReactNode;
   legacyContent: Record<LegacyView, React.ReactNode>;
 }) => {
-  const [currentView, setCurrentView] = useState<ProjectView>('modding');
-  const [currentLegacyView, setCurrentLegacyView] = useState<LegacyView>('planetminecraft');
+  const pathname = usePathname();
+  const currentView = projectViewFromPathname(pathname);
+  const currentLegacyView: LegacyView = 'planetminecraft';
   const [legacyMenuOpen, setLegacyMenuOpen] = useState(false);
   const legacyMenuRef = useRef<HTMLDivElement>(null);
 
@@ -61,13 +81,14 @@ export const ProjectViewManager = ({
       <div className="w-full mb-8 border-b border-slate-700">
         <div className="flex justify-center">
           {PROJECT_TABS.map((tab) => (
-            <button
+            <Link
               key={tab.id}
-              onClick={() => setCurrentView(tab.id)}
+              href={PROJECT_PATHS[tab.id]}
+              aria-current={currentView === tab.id ? 'page' : undefined}
               className={tabClasses(currentView === tab.id)}
             >
               {tab.label}
-            </button>
+            </Link>
           ))}
 
           <div className="relative" ref={legacyMenuRef}>
@@ -92,14 +113,11 @@ export const ProjectViewManager = ({
                 className="absolute left-1/2 z-20 mt-1 w-52 -translate-x-1/2 overflow-hidden rounded-xl border-2 border-slate-500 bg-slate-800 shadow-lg"
               >
                 {LEGACY_TABS.map((tab) => (
-                  <button
+                  <Link
                     key={tab.id}
+                    href={LEGACY_PATHS[tab.id]}
                     role="menuitem"
-                    onClick={() => {
-                      setCurrentView('legacy');
-                      setCurrentLegacyView(tab.id);
-                      setLegacyMenuOpen(false);
-                    }}
+                    onClick={() => setLegacyMenuOpen(false)}
                     className={`block w-full px-4 py-3 text-left text-base transition-colors focus:outline-none 
                       ${currentView === 'legacy' && currentLegacyView === tab.id
                         ? 'bg-slate-700 text-sky-400'
@@ -108,7 +126,7 @@ export const ProjectViewManager = ({
                     `}
                   >
                     {tab.label}
-                  </button>
+                  </Link>
                 ))}
               </div>
             )}

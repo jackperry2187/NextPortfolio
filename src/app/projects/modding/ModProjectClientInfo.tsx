@@ -3,11 +3,10 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { useModStore } from "../state/modState";
+import { useModStore } from "../../state/modState";
 import { useShallow } from "zustand/shallow";
-import { type CurseforgeInfo, type ModrinthInfo } from "../state/modTypes";
 import { Curseforge, Modrinth } from "~/components/icons";
-import { type ModStatKeys } from "./projectsData";
+import { type ModStatKeys } from "./moddingProjectsData";
 
 // Helper component for consistent link styling & structure
 const LinkOuter = ({ children }: { children: React.ReactNode }) => (
