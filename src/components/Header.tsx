@@ -16,7 +16,7 @@ const Header = () => {
                             <Link className={(pathname === '/experience' ? ' text-slate-100' : '')} href="/experience">Experience</Link>
                         </li>
                         <li className="hover:text-slate-100">
-                            <Link className={(pathname === '/projects' ? ' text-slate-100' : '')} href="/projects">Projects</Link>
+                            <Link className={(pathname === '/projects' || pathname.startsWith('/projects/') ? ' text-slate-100' : '')} href="/projects">Projects</Link>
                         </li>
                         <li className="hover:text-slate-100">
                             <Link className={(pathname === '/classes' ? ' text-slate-100' : '')} href="/classes">Classes</Link>
