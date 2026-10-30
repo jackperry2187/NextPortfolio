@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import CaretDown from '~/components/icons/CaretDown';
 
 export type ProjectView = 'modding' | 'web' | 'legacy';
-export type LegacyView = 'planetminecraft';
+export type LegacyView = 'planetminecraft' | 'youtube';
 
 const PROJECT_TABS: { id: Exclude<ProjectView, 'legacy'>; label: string }[] = [
   { id: 'modding', label: 'Modding Projects' },
@@ -14,6 +14,7 @@ const PROJECT_TABS: { id: Exclude<ProjectView, 'legacy'>; label: string }[] = [
 
 const LEGACY_TABS: { id: LegacyView; label: string }[] = [
   { id: 'planetminecraft', label: 'PlanetMinecraft' },
+  { id: 'youtube', label: 'JWolfCrafter (YouTube)' },
 ];
 
 const PROJECT_PATHS: Record<Exclude<ProjectView, 'legacy'>, string> = {
@@ -23,14 +24,25 @@ const PROJECT_PATHS: Record<Exclude<ProjectView, 'legacy'>, string> = {
 
 const LEGACY_PATHS: Record<LegacyView, string> = {
   planetminecraft: '/projects/legacy/planetminecraft',
+  youtube: '/projects/legacy/youtube',
 };
 
+const normalizePathname = (pathname: string | null) => pathname?.replace(/\/+$/, '') ?? '/';
+
 const projectViewFromPathname = (pathname: string | null): ProjectView => {
-  const normalizedPathname = pathname?.replace(/\/+$/, '') ?? '/';
+  const normalizedPathname = normalizePathname(pathname);
 
   if (normalizedPathname === '/projects/web') return 'web';
-  if (normalizedPathname === '/projects/legacy/planetminecraft') return 'legacy';
+  if (normalizedPathname.startsWith('/projects/legacy/')) return 'legacy';
   return 'modding';
+};
+
+const legacyViewFromPathname = (pathname: string | null): LegacyView => {
+  const normalizedPathname = normalizePathname(pathname);
+
+  return (
+    LEGACY_TABS.find((tab) => LEGACY_PATHS[tab.id] === normalizedPathname)?.id ?? 'planetminecraft'
+  );
 };
 
 const tabClasses = (active: boolean) =>
@@ -52,7 +64,7 @@ export const ProjectViewManager = ({
 }) => {
   const pathname = usePathname();
   const currentView = projectViewFromPathname(pathname);
-  const currentLegacyView: LegacyView = 'planetminecraft';
+  const currentLegacyView = legacyViewFromPathname(pathname);
   const [legacyMenuOpen, setLegacyMenuOpen] = useState(false);
   const legacyMenuRef = useRef<HTMLDivElement>(null);
 
@@ -110,7 +122,7 @@ export const ProjectViewManager = ({
             {legacyMenuOpen && (
               <div
                 role="menu"
-                className="absolute left-1/2 z-20 mt-1 w-52 -translate-x-1/2 overflow-hidden rounded-xl border-2 border-slate-500 bg-slate-800 shadow-lg"
+                className="absolute left-1/2 z-20 mt-1 w-64 -translate-x-1/2 overflow-hidden rounded-xl border-2 border-slate-500 bg-slate-800 shadow-lg"
               >
                 {LEGACY_TABS.map((tab) => (
                   <Link

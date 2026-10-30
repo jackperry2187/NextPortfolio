@@ -1,11 +1,11 @@
 ---
 name: getPMCData
-description: "Use when refreshing the PlanetMinecraft (PMC) submission stats in src/app/projects/pmcProjectsData.ts — scrapes views, downloads, comments, diamonds, favorites, titles, subtitles and upload dates for the ShadowFlameSkull profile using the integrated browser, then rewrites the data file and bumps PMC_STATS_AS_OF. Trigger phrases: update PMC data, refresh PlanetMinecraft stats, re-scrape PMC, update legacy projects stats."
+description: "Use when refreshing the PlanetMinecraft (PMC) submission stats in src/app/projects/legacy/planetminecraft/pmcProjectsData.ts — scrapes views, downloads, comments, diamonds, favorites, titles, subtitles and upload dates for the ShadowFlameSkull profile using the integrated browser, then rewrites the data file and bumps PMC_STATS_AS_OF. Trigger phrases: update PMC data, refresh PlanetMinecraft stats, re-scrape PMC, update legacy projects stats."
 ---
 
 # getPMCData
 
-Refreshes the stat numbers in [src/app/projects/pmcProjectsData.ts](../../../src/app/projects/pmcProjectsData.ts).
+Refreshes the stat numbers in [pmcProjectsData.ts](../../../src/app/projects/legacy/planetminecraft/pmcProjectsData.ts).
 
 The 19 submissions are archival — nothing new will be posted and the artwork never changes. **Only the view/download/comment/diamond/favorite counts and `PMC_STATS_AS_OF` should change on a refresh.**
 
@@ -190,7 +190,7 @@ Never hand-copy base64 out of a tool result into a command — one dropped chara
 
 ## Step 5 — Rewrite the data file
 
-Update [src/app/projects/pmcProjectsData.ts](../../../src/app/projects/pmcProjectsData.ts):
+Update [pmcProjectsData.ts](../../../src/app/projects/legacy/planetminecraft/pmcProjectsData.ts):
 
 1. Set `PMC_STATS_AS_OF` to the current month and year, e.g. `"October 2026"`.
 2. Update the `stats` numbers in place, keeping newest-first order.
