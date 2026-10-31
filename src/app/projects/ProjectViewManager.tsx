@@ -13,9 +13,9 @@ const PROJECT_TABS: { id: Exclude<ProjectView, 'legacy'>; label: string }[] = [
 ];
 
 const LEGACY_TABS: { id: LegacyView; label: string }[] = [
+  { id: 'music', label: 'Music (JWolf)' },
   { id: 'planetminecraft', label: 'PlanetMinecraft' },
   { id: 'youtube', label: 'YouTube (JWolfCrafter)' },
-  { id: 'music', label: 'Music (JWolf)' },
 ];
 
 const PROJECT_PATHS: Record<Exclude<ProjectView, 'legacy'>, string> = {
