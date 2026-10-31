@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import CaretDown from '~/components/icons/CaretDown';
 
 export type ProjectView = 'modding' | 'web' | 'legacy';
-export type LegacyView = 'planetminecraft' | 'youtube';
+export type LegacyView = 'planetminecraft' | 'youtube' | 'music';
 
 const PROJECT_TABS: { id: Exclude<ProjectView, 'legacy'>; label: string }[] = [
   { id: 'modding', label: 'Modding Projects' },
@@ -15,6 +15,7 @@ const PROJECT_TABS: { id: Exclude<ProjectView, 'legacy'>; label: string }[] = [
 const LEGACY_TABS: { id: LegacyView; label: string }[] = [
   { id: 'planetminecraft', label: 'PlanetMinecraft' },
   { id: 'youtube', label: 'YouTube (JWolfCrafter)' },
+  { id: 'music', label: 'Music (JWolf)' },
 ];
 
 const PROJECT_PATHS: Record<Exclude<ProjectView, 'legacy'>, string> = {
@@ -25,6 +26,7 @@ const PROJECT_PATHS: Record<Exclude<ProjectView, 'legacy'>, string> = {
 const LEGACY_PATHS: Record<LegacyView, string> = {
   planetminecraft: '/projects/legacy/planetminecraft',
   youtube: '/projects/legacy/youtube',
+  music: '/projects/legacy/music',
 };
 
 const normalizePathname = (pathname: string | null) => pathname?.replace(/\/+$/, '') ?? '/';

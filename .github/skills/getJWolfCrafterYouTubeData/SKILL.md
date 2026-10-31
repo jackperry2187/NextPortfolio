@@ -1,11 +1,13 @@
 ---
-name: getYouTubeData
-description: "Use when refreshing the YouTube stats in src/app/projects/legacy/youtube/youtubeVideosData.ts — scrapes subscriber count, channel total views, and per-video views and likes for the JWolfCrafter channel using the integrated browser, then rewrites the data file and bumps YOUTUBE_STATS_AS_OF. Trigger phrases: update YouTube data, refresh YouTube stats, re-scrape YouTube, update JWolfCrafter stats, update legacy projects stats."
+name: getJWolfCrafterYouTubeData
+description: "Use when refreshing the YouTube stats in src/app/projects/legacy/youtube/youtubeVideosData.ts — scrapes subscriber count, channel total views, and per-video views and likes for the **JWolfCrafter** Minecraft channel (@JWolfCrafter) using the integrated browser, then rewrites the data file and bumps YOUTUBE_STATS_AS_OF. Trigger phrases: update JWolfCrafter stats, refresh JWolfCrafter YouTube stats, re-scrape JWolfCrafter, update legacy projects stats. NOT for the JWolf music channel (@jwolf1081) — use getJWolfYouTubeData for that."
 ---
 
-# getYouTubeData
+# getJWolfCrafterYouTubeData
 
 Refreshes the stat numbers in [youtubeVideosData.ts](../../../src/app/projects/legacy/youtube/youtubeVideosData.ts).
+
+> **Not this channel?** There are two YouTube channels in this repo. `@JWolfCrafter` is the 2012–2013 Minecraft channel covered here. `@jwolf1081` is the 2019–2020 music channel — see [getJWolfYouTubeData](../getJWolfYouTubeData/SKILL.md).
 
 The 6 uploads are archival — the channel has been dormant since 2013 and nothing new will be posted. **Only `youtubeChannelStats`, the per-video `stats`, and `YOUTUBE_STATS_AS_OF` should change on a refresh.**
 

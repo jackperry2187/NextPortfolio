@@ -1,4 +1,5 @@
 import { ProjectViewManager } from "./ProjectViewManager";
+import { MusicProjects } from "./legacy/music/MusicProjects";
 import { PlanetMinecraftProjects } from "./legacy/planetminecraft/PlanetMinecraftProjects";
 import { YouTubeProjects } from "./legacy/youtube/YouTubeProjects";
 import { ModdingProjects } from "./modding/ModdingProjects";
@@ -12,6 +13,7 @@ const Projects = () => (
       legacyContent={{
         planetminecraft: <PlanetMinecraftProjects />,
         youtube: <YouTubeProjects />,
+        music: <MusicProjects />,
       }}
     />
   </div>
